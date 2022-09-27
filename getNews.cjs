@@ -37,6 +37,7 @@ axios.get(url).then(function(r1) {
 
     // Done! The article content is in the textContent property
     console.log(article);
+    return(article.textContent)
   })
 })
 }
