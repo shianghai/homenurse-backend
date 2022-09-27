@@ -1,15 +1,14 @@
 // we need axios to make HTTP requests
 const axios = require('axios');
-
-// and we need jsdom and Readability to parse the article HTML
 const { JSDOM } = require('jsdom');
 const { Readability } = require('@mozilla/readability');
 
 // First lets get some search data from News API
 
+var content;
 
-const GetNews = (index)=>{
-
+exports =function (index){
+  
 
 // Build the URL we are going request. This will get articles related to Apple and sort them newest first
 let url = 'https://newsapi.org/v2/everything?' +
@@ -17,7 +16,7 @@ let url = 'https://newsapi.org/v2/everything?' +
 'sortBy=publishedAt&' +
 'apiKey=cc456e085bb84f19b96f15468198a07e';
 
-try{
+
 // Make the request with axios' get() function
 axios.get(url).then(function(r1) {
 
@@ -34,15 +33,15 @@ axios.get(url).then(function(r1) {
 
     // now pass the DOM document into readability to parse
     let article = new Readability(dom.window.document).parse();
-
+    content = article.textContent;
     // Done! The article content is in the textContent property
-    console.log(article);
-    return(article.textContent)
+    
+    
   })
 })
+
+
+  
+  return content;
 }
-catch(error){
-  console.log(error)
-}
-}
-module.exports = GetNews;
+module.exports = content;
